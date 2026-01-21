@@ -1,11 +1,10 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SAPA DESA | Kecamatan</title>
-<!-- FAVICON -->
-  <link rel="icon" href="OIP.jpg" type="image/x-icon" />
+
     <style>
       body {
         margin: 0;
@@ -16,6 +15,7 @@
         background: linear-gradient(135deg, #003366, #0054a8);
         color: #fff;
         padding: 18px 20px;
+        position: relative;
       }
       .header-top {
         display: flex;
@@ -42,9 +42,31 @@
       #userInfo {
         position: absolute;
         right: 20px;
-        top: 20px;
-        font-size: 12px;
+        top: 18px;
         text-align: right;
+        font-size: 13px;
+        color: #fff;
+      }
+
+      #userInfo b {
+        display: block;
+        font-size: 14px;
+        margin-bottom: 6px;
+      }
+
+      #userInfo button {
+        padding: 5px 14px;
+        border: none;
+        border-radius: 20px;
+        background: rgba(255, 255, 255, 0.15);
+        color: #fff;
+        cursor: pointer;
+        font-size: 12px;
+        transition: 0.25s;
+      }
+
+      #userInfo button:hover {
+        background: rgba(255, 255, 255, 0.25);
       }
       #userInfo button {
         margin-top: 6px;
@@ -180,10 +202,25 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        background: linear-gradient(135deg, #003366, #0054a8);
+
+        background: linear-gradient(270deg, #003366, #0054a8, #0d6efd, #003366);
+        background-size: 600% 600%;
+        animation: gradientMove 12s ease infinite;
+
         z-index: 10000;
       }
 
+      @keyframes gradientMove {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
       #loginCard {
         width: 360px;
         background: rgba(255, 255, 255, 0.15);
@@ -192,6 +229,7 @@
         border-radius: 18px;
         color: #fff;
         text-align: center;
+        box-shadow: 0 20px 45px rgba(0, 0, 0, 0.45);
       }
 
       #loginCard h3 {
@@ -244,7 +282,9 @@
 
       /* INPUT FOCUS HALUS */
       #loginCard input {
-        transition: box-shadow 0.3s, transform 0.2s;
+        transition:
+          box-shadow 0.3s,
+          transform 0.2s;
       }
 
       #loginCard input:focus {
@@ -255,7 +295,10 @@
 
       /* TOMBOL MASUK */
       #loginCard button {
-        transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+        transition:
+          transform 0.2s,
+          box-shadow 0.2s,
+          background 0.2s;
       }
 
       #loginCard button:hover {
@@ -349,7 +392,7 @@
           data-desa="Desa Gunasari"
           onclick="openModal('LINK_GUNASARI')"
         >
-          <img src="kadesgunasari.png" /><span>Desa Gunasari</span>
+          <img src="FOTO_GUNASARI.jpg" /><span>Desa Gunasari</span>
         </div>
 
         <div
@@ -408,7 +451,7 @@
 
     <script>
       const users = [
-        { u: "admin", p: "admin123", role: "Admin", desa: "" },
+        { u: "admin", p: "admin123", role: "", desa: "" },
         { u: "DesaBaginda", p: "desa123", role: "Desa", desa: "Desa Baginda" },
         {
           u: "DesaCiherang",
@@ -477,9 +520,10 @@
         const u = JSON.parse(localStorage.getItem("login"));
         if (!u) return;
         loginBox.style.display = "none";
-        userInfo.innerHTML = `<b>${u.u}</b><br>${u.role}<br>${
-          u.desa || ""
-        }<br><button onclick="logout()">Logout</button>`;
+        userInfo.innerHTML = `
+  <b>${u.u}</b>
+  <button onclick="logout()">Logout</button>
+`;
         if (u.role === "Desa") {
           document.querySelectorAll(".menu").forEach((m) => {
             if (m.dataset.desa !== u.desa) m.style.display = "none";
@@ -503,6 +547,3 @@
     </script>
   </body>
 </html>
-
-
-
