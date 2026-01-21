@@ -475,34 +475,36 @@
 
       <script>
   function cek() {
-    const u = JSON.parse(localStorage.getItem("login"));
-    if (!u) return;
+        const u = JSON.parse(localStorage.getItem("login"));
+        if (!u) return;
+        loginBox.style.display = "none";
+        userInfo.innerHTML = <b>${u.u}</b><br>${u.role}<br>${
+          u.desa || ""
+        }<br><button onclick="logout()">Logout</button>;
+        if (u.role === "Desa") {
+          document.querySelectorAll(".menu").forEach((m) => {
+            if (m.dataset.desa !== u.desa) m.style.display = "none";
+          });
+        }
+      }
 
-    // Sembunyikan login
-    loginBox.style.display = "none";
-
-    // Info user
-    userInfo.innerHTML = `<b>${u.u}</b><br>${u.role}<br>${
-      u.desa || ""
-    }<br><button onclick="logout()">Logout</button>`;
-
-    // 🔥 UBAH JUDUL TAB OTOMATIS
-    if (u.role === "Desa") {
-      document.title = `SAPA DESA | ${u.desa}`;
-    } else {
-      document.title = "SAPA DESA | Kecamatan Sumedang Selatan";
-    }
-
-    // Filter menu untuk desa
-    if (u.role === "Desa") {
-      document.querySelectorAll(".menu").forEach((m) => {
-        if (m.dataset.desa !== u.desa) m.style.display = "none";
-      });
-    }
-  }
-</script>
+      function logout() {
+        localStorage.clear();
+        location.reload();
+      }
+      function openModal(url) {
+        viewer.src = url;
+        popupModal.style.display = "flex";
+      }
+      function closeModal() {
+        popupModal.style.display = "none";
+        viewer.src = "";
+      }
+      cek();
+    </script>
   </body>
 </html>
+
 
 
 
