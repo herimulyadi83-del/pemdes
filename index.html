@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SAPA DESA | Kecamatan</title>
+
+    <style>
+      body {
+        margin: 0;
+        font-family: "Segoe UI", Arial, sans-serif;
+        background: #f4f6fb;
+      }
+      header {
+        background: linear-gradient(135deg, #003366, #0054a8);
+        color: #fff;
+        padding: 18px 20px;
+      }
+      .header-top {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+      }
+      .header-top img {
+        width: 55px;
+        height: 55px;
+      }
+      .header-title {
+        line-height: 1.3;
+      }
+      .header-title h1 {
+        margin: 0;
+        font-size: 22px;
+      }
+      .header-title h2 {
+        margin: 0;
+        font-size: 14px;
+        font-weight: normal;
+        opacity: 0.9;
+      }
+      #userInfo {
+        position: absolute;
+        right: 20px;
+        top: 20px;
+        font-size: 12px;
+        text-align: right;
+      }
+      #userInfo button {
+        margin-top: 6px;
+        padding: 6px 12px;
+        border: none;
+        border-radius: 6px;
+        background: #d32f2f;
+        color: #fff;
+        cursor: pointer;
+      }
+
+      .container {
+        max-width: 1250px;
+        margin: auto;
+        padding: 25px;
+      }
+      .section-title {
+        font-size: 18px;
+        font-weight: 600;
+        margin-bottom: 15px;
+        color: #333;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 22px;
+      }
+      .menu {
+        height: 230px;
+        border-radius: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        cursor: pointer;
+        text-align: center;
+        padding: 15px;
+        box-shadow: 0 8px 18px rgba(0, 0, 0, 0.18);
+        transition: 0.25s;
+      }
+      .menu:hover {
+        transform: translateY(-6px);
+      }
+      .menu img {
+        width: 90px;
+        height: 90px;
+        border-radius: 50%;
+        background: #fff;
+        border: 3px solid #fff;
+        margin-bottom: 12px;
+      }
+      .menu span {
+        font-size: 14px;
+        font-weight: 600;
+      }
+
+      .biru {
+        background: linear-gradient(145deg, #0d6efd, #1a73e8);
+      }
+      .hijau {
+        background: linear-gradient(145deg, #2e9f48, #3cbf5f);
+      }
+      .merah {
+        background: linear-gradient(145deg, #d93c3c, #e45757);
+      }
+      .kuning {
+        background: linear-gradient(145deg, #e5a600, #f5c32b);
+      }
+      .ungu {
+        background: linear-gradient(145deg, #7b3fa1, #9b63c7);
+      }
+      .orange {
+        background: linear-gradient(145deg, #fb8c00, #ff9f1c);
+      }
+      .teal {
+        background: linear-gradient(145deg, #009688, #26a69a);
+      }
+      .coklat {
+        background: linear-gradient(145deg, #6d4c41, #8d6e63);
+      }
+      .abu {
+        background: linear-gradient(145deg, #607d8b, #78909c);
+      }
+
+      footer {
+        text-align: center;
+        font-size: 13px;
+        color: #555;
+        margin: 30px 0 10px;
+      }
+
+      /* MODAL */
+      .modal {
+        position: fixed;
+        inset: 0;
+        display: none;
+        justify-content: center;
+        align-items: center;
+        background: rgba(0, 0, 0, 0.45);
+        backdrop-filter: blur(6px);
+        z-index: 9999;
+      }
+      .modal-content {
+        width: 95%;
+        max-width: 1200px;
+        height: 90vh;
+        background: #fff;
+        border-radius: 14px;
+        position: relative;
+      }
+      .close-btn {
+        position: absolute;
+        right: 18px;
+        top: 15px;
+        padding: 8px 14px;
+        border: none;
+        border-radius: 6px;
+        background: #c62828;
+        color: #fff;
+        cursor: pointer;
+      }
+      iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+      }
+
+      /* LOGIN */
+      #loginBox {
+        position: fixed;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, #003366, #0054a8);
+        z-index: 10000;
+      }
+
+      #loginCard {
+        width: 360px;
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(14px);
+        padding: 35px 30px;
+        border-radius: 18px;
+        color: #fff;
+        text-align: center;
+      }
+
+      #loginCard h3 {
+        margin: 0;
+        font-size: 22px;
+      }
+
+      #loginCard small {
+        display: block;
+        margin-bottom: 20px;
+        opacity: 0.9;
+      }
+
+      #loginCard input {
+        width: 100%;
+        height: 46px;
+        padding: 0 14px;
+        border: none;
+        border-radius: 10px;
+        margin-bottom: 14px;
+        font-size: 14px;
+        box-sizing: border-box;
+      }
+
+      #loginCard button {
+        width: 100%;
+        height: 46px;
+        border: none;
+        border-radius: 10px;
+        background: #ffd54f;
+        font-weight: 700;
+        font-size: 15px;
+        cursor: pointer;
+      }
+      /* ANIMASI MASUK HALAMAN */
+      @keyframes fadeSlide {
+        from {
+          opacity: 0;
+          transform: translateY(20px) scale(0.98);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+      }
+
+      #loginCard {
+        animation: fadeSlide 0.8s ease-out;
+      }
+
+      /* INPUT FOCUS HALUS */
+      #loginCard input {
+        transition: box-shadow 0.3s, transform 0.2s;
+      }
+
+      #loginCard input:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(255, 213, 79, 0.4);
+        transform: scale(1.02);
+      }
+
+      /* TOMBOL MASUK */
+      #loginCard button {
+        transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+      }
+
+      #loginCard button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
+      }
+
+      #loginCard button:active {
+        transform: scale(0.97);
+      }
+
+      /* FADE OUT SAAT LOGIN BERHASIL */
+      .fade-out {
+        animation: fadeOut 0.6s ease forwards;
+      }
+
+      @keyframes fadeOut {
+        to {
+          opacity: 0;
+          transform: scale(0.95);
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="loginBox">
+      <div id="loginCard">
+        <h3>SAPA DESA</h3>
+        <small>Sistem Administrasi & Pelaporan Desa</small>
+
+        <input id="user" type="text" placeholder="Username" />
+        <input id="pass" type="password" placeholder="Password" />
+
+        <button onclick="login()">MASUK</button>
+      </div>
+    </div>
+    <header>
+      <div class="header-top">
+        <img src="logo.png" />
+        <div class="header-title">
+          <h1>SAPA DESA</h1>
+          <h2>Kecamatan Sumedang Selatan</h2>
+        </div>
+      </div>
+      <div id="userInfo"></div>
+    </header>
+
+    <div class="container">
+      <div class="dashboard-header">
+        <div class="dashboard-title">
+          <h3></h3>
+          <p>Monitoring & Akses Sistem Desa</p>
+        </div>
+      </div>
+      <div class="grid">
+        <div
+          class="menu biru"
+          data-desa="Desa Baginda"
+          onclick="openModal('LINK_BAGINDA')"
+        >
+          <img src="FOTO_BAGINDA.jpg" /><span>Desa Baginda</span>
+        </div>
+
+        <div
+          class="menu hijau"
+          data-desa="Desa Ciherang"
+          onclick="openModal('LINK_CIHERANG')"
+        >
+          <img src="FOTO_CIHERANG.jpg" /><span>Desa Ciherang</span>
+        </div>
+
+        <div
+          class="menu merah"
+          data-desa="Desa Cipancar"
+          onclick="openModal('LINK_CIPANCAR')"
+        >
+          <img src="FOTO_CIPANCAR.jpg" /><span>Desa Cipancar</span>
+        </div>
+
+        <div
+          class="menu kuning"
+          data-desa="Desa Citengah"
+          onclick="openModal('LINK_CITENGAH')"
+        >
+          <img src="FOTO_CITENGAH.jpg" /><span>Desa Citengah</span>
+        </div>
+
+        <div
+          class="menu ungu"
+          data-desa="Desa Gunasari"
+          onclick="openModal('LINK_GUNASARI')"
+        >
+          <img src="FOTO_GUNASARI.jpg" /><span>Desa Gunasari</span>
+        </div>
+
+        <div
+          class="menu orange"
+          data-desa="Desa Margalaksana"
+          onclick="openModal('LINK_MARGALAKSANA')"
+        >
+          <img src="FOTO_MARGALAKSANA.jpg" /><span>Desa Margalaksana</span>
+        </div>
+
+        <div
+          class="menu teal"
+          data-desa="Desa Margamekar"
+          onclick="openModal('LINK_MARGAMEKAR')"
+        >
+          <img src="FOTO_MARGAMEKAR.jpg" /><span>Desa Margamekar</span>
+        </div>
+
+        <div
+          class="menu coklat"
+          data-desa="Desa Mekarrahayu"
+          onclick="openModal('LINK_MEKARRAHAYU')"
+        >
+          <img src="FOTO_MEKARRAHAYU.jpg" /><span>Desa Mekarrahayu</span>
+        </div>
+
+        <div
+          class="menu abu"
+          data-desa="Desa Sukagalih"
+          onclick="openModal('LINK_SUKAGALIH')"
+        >
+          <img src="FOTO_SUKAGALIH.jpg" /><span>Desa Sukagalih</span>
+        </div>
+
+        <div
+          class="menu ungu"
+          data-desa="Desa Sukajaya"
+          onclick="openModal('LINK_SUKAJAYA')"
+        >
+          <img src="FOTO_SUKAJAYA.jpg" /><span>Desa Sukajaya</span>
+        </div>
+      </div>
+
+      <footer>
+        © 2026 Sistem Informasi Pelayanan Desa Terpadu
+        <br />
+      </footer>
+    </div>
+
+    <div class="modal" id="popupModal">
+      <div class="modal-content">
+        <button class="close-btn" onclick="closeModal()">Tutup</button>
+        <iframe id="viewer"></iframe>
+      </div>
+    </div>
+
+    <script>
+      const users = [
+        { u: "admin", p: "admin123", role: "Admin", desa: "" },
+        { u: "DesaBaginda", p: "desa123", role: "Desa", desa: "Desa Baginda" },
+        {
+          u: "DesaCiherang",
+          p: "desa123",
+          role: "Desa",
+          desa: "Desa Ciherang",
+        },
+        {
+          u: "DesaCipancar",
+          p: "desa123",
+          role: "Desa",
+          desa: "Desa Cipancar",
+        },
+        {
+          u: "DesaCitengah",
+          p: "desa123",
+          role: "Desa",
+          desa: "Desa Citengah",
+        },
+        {
+          u: "DesaGunasari",
+          p: "desa123",
+          role: "Desa",
+          desa: "Desa Gunasari",
+        },
+        {
+          u: "DesaMargalaksana",
+          p: "desa123",
+          role: "Desa",
+          desa: "Desa Margalaksana",
+        },
+        {
+          u: "DesaMargamekar",
+          p: "desa123",
+          role: "Desa",
+          desa: "Desa Margamekar",
+        },
+        {
+          u: "DesaMekarrahayu",
+          p: "desa123",
+          role: "Desa",
+          desa: "Desa Mekarrahayu",
+        },
+        {
+          u: "DesaSukagalih",
+          p: "desa123",
+          role: "Desa",
+          desa: "Desa Sukagalih",
+        },
+        {
+          u: "DesaSukajaya",
+          p: "desa123",
+          role: "Desa",
+          desa: "Desa Sukajaya",
+        },
+      ];
+
+      function login() {
+        const f = users.find((x) => x.u === user.value && x.p === pass.value);
+        if (!f) return alert("Login salah");
+        localStorage.setItem("login", JSON.stringify(f));
+        location.reload();
+      }
+
+      function cek() {
+        const u = JSON.parse(localStorage.getItem("login"));
+        if (!u) return;
+        loginBox.style.display = "none";
+        userInfo.innerHTML = `<b>${u.u}</b><br>${u.role}<br>${
+          u.desa || ""
+        }<br><button onclick="logout()">Logout</button>`;
+        if (u.role === "Desa") {
+          document.querySelectorAll(".menu").forEach((m) => {
+            if (m.dataset.desa !== u.desa) m.style.display = "none";
+          });
+        }
+      }
+
+      function logout() {
+        localStorage.clear();
+        location.reload();
+      }
+      function openModal(url) {
+        viewer.src = url;
+        popupModal.style.display = "flex";
+      }
+      function closeModal() {
+        popupModal.style.display = "none";
+        viewer.src = "";
+      }
+      cek();
+    </script>
+  </body>
+</html>
