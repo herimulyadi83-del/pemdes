@@ -4,8 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SAPA DESA | Kecamatan</title>
-    <!-- FAVICON -->
-  <link rel="icon" href="logo.png" type="image/x-icon" />
+
     <style>
       body {
         margin: 0;
@@ -315,9 +314,9 @@
         <div
           class="menu biru"
           data-desa="Desa Baginda"
-          onclick="openModal('https://docs.google.com/spreadsheets/d/1kr5jNsqTCn0BapZxlFpnMNQEO2VoIJai-bqkNM3JBpg/edit?usp=drive_link')"
+          onclick="openModal('LINK_BAGINDA')"
         >
-          <img src="logo.png" /><span></span>
+          <img src="FOTO_BAGINDA.jpg" /><span>Desa Baginda</span>
         </div>
 
         <div
@@ -341,7 +340,7 @@
           data-desa="Desa Citengah"
           onclick="openModal('LINK_CITENGAH')"
         >
-          <img src="kadesgunasari.png" /><span>Desa Citengah</span>
+          <img src="FOTO_CITENGAH.jpg" /><span>Desa Citengah</span>
         </div>
 
         <div
@@ -349,7 +348,7 @@
           data-desa="Desa Gunasari"
           onclick="openModal('LINK_GUNASARI')"
         >
-          <img src="kadesgunasari.png" /><span>Desa Gunasari</span>
+          <img src="FOTO_GUNASARI.jpg" /><span>Desa Gunasari</span>
         </div>
 
         <div
@@ -473,14 +472,13 @@
         location.reload();
       }
 
-      <script>
-  function cek() {
+      function cek() {
         const u = JSON.parse(localStorage.getItem("login"));
         if (!u) return;
         loginBox.style.display = "none";
-        userInfo.innerHTML = <b>${u.u}</b><br>${u.role}<br>${
+        userInfo.innerHTML = `<b>${u.u}</b><br>${u.role}<br>${
           u.desa || ""
-        }<br><button onclick="logout()">Logout</button>;
+        }<br><button onclick="logout()">Logout</button>`;
         if (u.role === "Desa") {
           document.querySelectorAll(".menu").forEach((m) => {
             if (m.dataset.desa !== u.desa) m.style.display = "none";
@@ -504,12 +502,3 @@
     </script>
   </body>
 </html>
-
-
-
-
-
-
-
-
-
